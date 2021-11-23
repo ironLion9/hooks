@@ -1,47 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect} from 'react';
+import { useForm } from '../../hooks/useForm';
 import './effects.css';
-import Message from './Message';
 
-const SimpleForm = () => {
 
-    const [formState, setFormState] = useState({
+const FormWithCustomHook = () => {
+
+    const [formValues, handleInputChange] = useForm({
         name: '',
-        email: ''
+        email: '',
+        password: ''
     });
 
-    const { name, email } = formState;
-
-
-    useEffect( () => {
-        // console.log('Hey!')
-    }, []); 
-
-    
-    useEffect( () => {
-        // console.log('Hey!')
-    }, [name]); 
-
+    const { name, email, password } = formValues;
 
     useEffect( () => {
-        // console.log('EmailCambio!')
+        console.log('Email cambio')
     }, [email]);
 
 
-    const handleInputChange = ({target}) => {
-
-        setFormState( { 
-            ...formState,
-            [target.name]: target.value
-        });
-    };
-
-    const handleSubmit = () => {
-        alert("holamundo");
-    }
 
     return (
         <>
-        <h1>useEffect</h1>
+        <h1>FormWithCustomHook</h1>
 
         <hr/>
 
@@ -68,27 +48,30 @@ const SimpleForm = () => {
                 onChange={ handleInputChange }
             />  
         </div>
+
+        <div className="form-group">
+            <input
+                className="form-control"
+                placeholder="*********"
+                type="password"
+                name="password"
+                value={password}
+                onChange={ handleInputChange }
+            />  
+        </div>
  
         <button
-            onSubmit={ handleSubmit } 
             className="btn btn-primary"
-            onSubmit={ handleSubmit }
             onClick={ () => {
-                setFormState( {
-                    name: '',
-                    email: ''
-                })
-                
+              
             }}
-            
-            >   
+        >   
             Enviar 
         </button>
 
 
-        { (name === 'Noelia') && <Message/> }
         </>
     )
 };
 
-export default SimpleForm;
+export default FormWithCustomHook;
